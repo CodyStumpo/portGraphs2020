@@ -1,0 +1,59 @@
+---
+title: "PortGraphs2020 Interpretation"
+author: "Cody Stumpo"
+output: html_document
+---
+
+# Motivation
+
+I've always been disappointed by stock tracking applications. They tend to just show you what each item in your portfolio did today. Unless you're an active trader, this is irrelevant.  And unless you're a professional, you probably shouldn't be an active trader.  Performance analytics, to the extent they exist, are focused mainly on how much each holding went up or down over time.  I wanted analytics that showed how a portfolio performed over time on a risk-adjusted basis, what to attribute that to, and what to do to be able to expect higher performance going forward.
+
+The point of having a portfolio is to achieve diversification, so this app measures that directly. How much of the risk of each holding is kept vs. diversified away by the portfolio. No matter how diverse your portfolio, you cannot diversify away all risk. There is systemic risk, which drives all asset prices to some degree or another. The market in theory compensates you for holding risk that no portfolio could diversify away, and that is where expected return comes from.  We want to compare then this expected return against the risk that we keep in our portfolio net of its diversification benefits.  
+
+# Methodology
+
+The calculations here use CAPM (Capital Asset Pricing Model) which is a classic and relatively simple model for how markets work. It is not "true" but it is useful.
+
+# Reading the statistics
+
+You can sort the table by any column to get a sense of the range of values and where each holding fits.  If you read through the glossary, you can see how one column leads to the next.  For example, each holding has a standard deviation of returns (sd) and a correlation of returns to the portfolio (corr2port). Multiplying these, we see how much risk of this holding is not diversified away by this portfolio (riskContribution). A fantastic property of portfolios is that these just add up (weighted by value) to equal the portfolio's standard deviation of return (which is why it is called risk contribution).  While risk contribution is directly comparable to sd (which are both in units of percent return). Risk Weight, more satisfyingly, includes the value of the holding and tells you exactly what percent of the portfolio's risk is due to this holding.
+
+Corr2Index and Beta tells you how the asset moves with the market, and this drives expected return.  
+
+The sharpe ratio is a portfolio-independent measure of risk over return (like sd & beta), but retRisk is a portfolio-dependent one - it uses the retained risk.
+
+# Reading the charts
+
+## Mispricing 
+
+Whatever expected return on risk our portfolio has, we can optimize by selling some of the holdings that have worse than this return on (net) risk and buying more of the holdings that have greater than this return on (net) risk.  The mispricing graph shows this very directly. As you adjust your holdings in this way, you will see the slope of that line (which is the portfolio's risk/reward ratio) move up and to the left, and you will see all the points move horizontally toward the line.  A fully optimized portfolio will have all points on the line, and if the assets are diverse enough the line will will have a slope equal to the market sharpe. You literally can't (expect to) beat the market in this model.
+
+## Backtesting
+
+A natural question is how the portfolio would have performed over the last year, and how that compares vs. the market. You can see how much of the portfolio's movements are market-driven vs. idiosyncratic.
+
+## Volatility
+
+This is a measure of how volatile the market has been at each point in time during the year.  Looking at this may help understand how the current volatility relates to the history, and how the history of market volatility relates to the backtest graph.
+
+
+
+## Correlation
+
+How correlated is every asset to every other asset, organized in clusters.  In addition to seeing the correlations themselves, it's helpful to see the clusters.  Eventually, I might include more direct analytics that take advantage of the correlation clusters.
+
+
+## Portfolio Components
+
+There is a lot of information in this chart. It shows for each holding, what it's riskiness is to the portfolio in dollars (the length of its line segment), but also breaks this down into the kept risk vs. the diversified risk.  If there were a line for the portfolio itself, it would be horizontal (entirely kept risk) and have the length of the portfolio standard deviation in dollars. The individual holdings' projection onto the x-axis are directly their risk contribution (in dollar terms). So the angle of each  line segment is about the correlation of each holding to the portfolio.  Horizontal lines have a correlation of 1, vertical lines have a correlation of 0 (and you may see some lines going up and to the left of the origin, which have a negative correlation with the portfolio).
+
+This chart also shows how risky each holding is on its own (per dollar) via the width of the line segment, and the expected return of the holding (in percent) via the color scale.
+
+Keep your portfolio total standard deviation in mind when looking at this chart.
+
+You'd love to see somehow skinny vertical purple lines, but you can see how each holding makes tradeoffs for you and fits in this space.
+
+
+## Exposure vs. Risk
+
+This simply compares exposure weight vs. risk weight, to help you for example distinguish if holdings driving the portfolio risk are doing so simply by making up a lot of the portfolio.

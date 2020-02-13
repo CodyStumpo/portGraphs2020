@@ -1,0 +1,34 @@
+---
+title: "PortGraphs2020 Explanation"
+author: "Cody Stumpo"
+output: html_document
+---
+
+# Glossary
+
+* **value** - monetary amount of the holding (most recent quote)
+* **expweights** - percent of the portfolio's value
+* **ytd** - year to date actual returns
+* **sd** - annualized standard deviation of return.  This is the central risk metric all the other risk metrics depend on.
+    + _sd(ln(daily return)) * sqrt(trading days per year)_
+* **corr2port** - correlation to the portfolio
+* **corr2index** - correlation to the market
+* **beta** - multiplier for how much the holding moves relative to the market. _sd * corr2index / sd.index_
+* **eReturn** - expected absolute return. _beta * (sd.index * marketSharpe) + libor_
+* **riskContribution** - risk that is not diversified away by the rest of the portfolio. _sd * corr2port_
+* **riskWeight** - percent of the portfolio's risk. _riskContribution * value / (sd.port * portValue)_
+* **retRisk** - return on risk in the portfolio context.  _(eReturn-libor)/riskContribution_ 
+* **sharpe** - excess return / risk (outside the portfolio context). _(eReturn - libor) / sd_
+
+
+# Constants
+
+* **Market Sharpe** - 0.6
+* **libor** - 0.02
+* **trading days per year** - 251
+* **quote history** - 365 calendar days from today
+* **"the market"** - a proxy for "all investable assets." 70% VT, 20% FWDB, 10% USCI
+    + If you are looking for investment advice, just buy this portfolio and rebalance every so often.
+
+
+
