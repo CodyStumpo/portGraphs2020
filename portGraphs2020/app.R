@@ -149,8 +149,6 @@ server = function(input, output, session) {
         ### Compute summary statistics
         
         sd.index = returns %>% filter(symbol=="INDEX") %>% summarise(sdi=sd(daily.returns) * sqrt(tradingDaysPerYear)) %>% pull(sdi)
-        indexEReturn = stats %>% filter(symbol == "INDEX") %>% pull(eReturn)
-        indexSharpe <- stats %>% filter(symbol=="INDEX") %>% pull(sharpe)
         
         returns %>% 
             left_join(returns %>% filter(symbol=="PORT") %>% select(date, portReturns = daily.returns), by='date') %>% 
@@ -175,6 +173,9 @@ server = function(input, output, session) {
         portSD = stats %>% filter(symbol=="PORT") %>% pull(sd)
         portValueN = dayN %>% filter(symbol=="PORT") %>% pull(value)
         portSharpe = stats %>% filter(symbol=="PORT") %>% pull(sharpe)
+        indexEReturn = stats %>% filter(symbol == "INDEX") %>% pull(eReturn)
+        indexSharpe <- stats %>% filter(symbol=="INDEX") %>% pull(sharpe)
+        
         
         stats %<>% left_join(dayN) %>%              #also adds value to stats
             mutate(riskWeight = riskContribution * value / (portSD * portValueN))   
