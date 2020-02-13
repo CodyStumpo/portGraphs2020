@@ -66,7 +66,8 @@ ui <- fluidPage(
     sidebarLayout(
         sidebarPanel(width=3,
             rHandsontableOutput('portfolio'),
-            helpText("You can edit the above table, including adding and subtracting rows. Enter symbols that have quotes every day of the last year."),
+            helpText("You can edit the above table, including adding and subtracting rows."),
+            helpText("Enter symbols that have quotes every day of the last year. Enter a non-0 number for shares."),
             actionButton("Run", "Run"),
             br(),
             textOutput("portValue"),
