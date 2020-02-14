@@ -127,7 +127,7 @@ server = function(input, output, session) {
         
         
         returns %<>% 
-            left_join(portfolio, by="symbol") %>% 
+            left_join(values$table1, by="symbol") %>% 
             group_by(date) %>%
             summarise(value = sum(value), symbol="PORT") %>% 
             tq_mutate(select=value,
