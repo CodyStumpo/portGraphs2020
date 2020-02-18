@@ -41,8 +41,8 @@ ui <- fluidPage(
     sidebarLayout(
         sidebarPanel(width=3,
             rHandsontableOutput('portfolio'),
-            helpText("You can edit the above table, including adding and subtracting rows."),
-            helpText("Enter symbols that have quotes every day of the last year. Enter a non-0 number for shares."),
+            helpText("You can edit the above table, including adding and removing rows."),
+            helpText("Enter symbols that have quotes every day of the last year."),
             actionButton("Run", "Run"),
             br(),
             textOutput("portValue"),
@@ -86,7 +86,7 @@ server = function(input, output, session) {
     
     observeEvent(input$Run, {
         
-        values$table1 <-  hot_to_r(input$portfolio)
+        values$table1 <-  hot_to_r(input$portfolio) %>% filter(shares !=0)
         #### GET Portfolio data
         quotes = tq_get(values$table1$symbol, from=date1, to= date2) 
         ## Compute returns
